@@ -12,8 +12,11 @@ internal sealed class PlayerController : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _moveDirection;
     private Animator _anim;
+
     private static readonly int Horizontal = Animator.StringToHash("Horizontal");
     private static readonly int Vertical = Animator.StringToHash("Vertical");
+
+    private PlayerStats _playerStats = new PlayerStats();
 
     private void Start()
     {
@@ -26,9 +29,6 @@ internal sealed class PlayerController : MonoBehaviour
         var horizontalMovement = Input.GetAxisRaw("Horizontal");
         var verticalMovement = Input.GetAxisRaw("Vertical");
 
-        var mouseX = Input.GetAxisRaw("Mouse X");
-        var mouseY = Input.GetAxisRaw("Mouse Y");
-
         _anim.SetFloat(Horizontal, horizontalMovement);
         _anim.SetFloat(Vertical, verticalMovement);
 
@@ -37,11 +37,6 @@ internal sealed class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        Move();
-    }
-
-    private void Move()
     {
         _rb.velocity = Time.deltaTime * speed * _moveDirection;
     }
