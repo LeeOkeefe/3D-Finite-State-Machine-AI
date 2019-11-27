@@ -2,6 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(GuardRaycasting))]
+[RequireComponent(typeof(GuardPatrolling))]
 public class GuardBehaviour : MonoBehaviour
 {
     [SerializeField] private GuardState CurrentState;
@@ -11,22 +12,7 @@ public class GuardBehaviour : MonoBehaviour
     {
         CurrentState = GuardState.Patrolling;
         PreviousState = GuardState.Idle;
-    }
-
-    private void Update()
-    {
-        switch (CurrentState)
-        {
-            case GuardState.Patrolling:
-                // GuardMovement.Patrol();
-                break;
-            case GuardState.Resetting:
-                // GuardMovement.Reset();
-                break;
-            case GuardState.Chasing:
-                // GuardMovement.Chase();
-                break;
-        }
+        UpdateChildrenStates();
     }
 
     public void LostSight()
@@ -72,16 +58,13 @@ public class GuardBehaviour : MonoBehaviour
 
         PreviousState = CurrentState;
         CurrentState = newState;
+
+        UpdateChildrenStates();
     }
 
-    private enum GuardState
+    private void UpdateChildrenStates()
     {
-        Attacking,
-        Chasing,
-        Conversing,
-        Idle,
-        Investigating,
-        Patrolling,
-        Resetting
+        GetComponent<GuardPatrolling>().GuardState = CurrentState;
+        GetComponent<GuardRaycasting>().CurrentGuardState = CurrentState;
     }
 }

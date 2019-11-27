@@ -11,6 +11,8 @@ public class GuardRaycasting : MonoBehaviour
     [SerializeField] private SightState CurrentState;
     [SerializeField] private SightState LastState;
 
+    public GuardState CurrentGuardState;
+
     private void Awake()
     {
         Behaviour = GetComponent<GuardBehaviour>();
