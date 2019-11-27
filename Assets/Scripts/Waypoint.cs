@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Waypoint : MonoBehaviour
 {
     [SerializeField]
     private float radius = 0.3f;
     [SerializeField]
-    private List<Waypoint> linkedWaypoints;
+    public List<Waypoint> LinkedWaypoints;
 
     private void OnDrawGizmos()
     {
@@ -18,7 +16,7 @@ public class Waypoint : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        foreach (var linkedWaypoint in linkedWaypoints)
+        foreach (var linkedWaypoint in LinkedWaypoints)
         {
             if (linkedWaypoint == null)
                 continue;
@@ -28,9 +26,9 @@ public class Waypoint : MonoBehaviour
     }
 
 
-    public void CalculateNLinkedNodes()
+    public void CalculateLinkedNodes()
     {
-        linkedWaypoints.Clear();
+        LinkedWaypoints.Clear();
 
         // Gather nodes under parent
         var waypoints = transform.parent.GetComponentsInChildren<Waypoint>().ToList();
@@ -43,13 +41,8 @@ public class Waypoint : MonoBehaviour
 
             if (hit.transform == waypoint.transform)
             {
-                linkedWaypoints.Add(waypoint);
+                LinkedWaypoints.Add(waypoint);
             }
         }
-
-        // Check to see which ones we hit
-
-
-        // Add hit nodes to our collection
     }
 }

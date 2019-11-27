@@ -4,6 +4,7 @@ using UnityEngine;
 namespace Editor
 {
     [CustomEditor(typeof(Waypoint))]
+    [CanEditMultipleObjects]
     public class WaypointCustomEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
@@ -14,7 +15,8 @@ namespace Editor
 
             if (GUILayout.Button("Calculate Linked Nodes"))
             {
-                myTarget.CalculateNLinkedNodes();
+                myTarget.CalculateLinkedNodes();
+                EditorUtility.SetDirty(target);
             }
         }
     }
