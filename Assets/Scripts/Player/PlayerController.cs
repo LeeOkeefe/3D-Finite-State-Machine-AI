@@ -91,7 +91,7 @@ namespace Player
             {
                 cameraPivot.transform.localEulerAngles = new Vector3(340, 0, 0);
             }
-            if (local.x >= 0 && local.x <= 90)
+            if (local.x >= -45 && local.x <= 120)
             {
                 cameraPivot.transform.localEulerAngles = new Vector3(0, 0, 0);
             }
