@@ -5,7 +5,7 @@ namespace Objects
     internal sealed class ForceObject : MonoBehaviour
     {
         [SerializeField]
-        [Range(100, 500)]
+        [Range(10, 500)]
         private float force = 150;
 
         private Rigidbody Rb => GetComponent<Rigidbody>();
