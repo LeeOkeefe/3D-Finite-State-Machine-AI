@@ -352,6 +352,37 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 490779361}
+    - target: {fileID: 7720818566475920418, guid: 6f0b9cba40fb4034e85871993d0c3efe,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 765e2fde8c84f094e99304c6198491ea, type: 3}
+    - target: {fileID: 7720818566475920418, guid: 6f0b9cba40fb4034e85871993d0c3efe,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed by
+        Humanoid clips.\n\tTransform 'Root'\n\tTransform 'RightFoot'\n\tTransform
+        'LeftHandPinky3'\n\tTransform 'RightHandMiddle3'\n\tTransform 'RightToeBase'\n\tTransform
+        'LeftHandIndex1'\n\tTransform 'RightHandThumb1'\n\tTransform 'LeftHandIndex2'\n\tTransform
+        'LeftHandRing3'\n\tTransform 'LeftHandThumb3'\n\tand more ...\n\tFrom animation
+        clip 'Look Around'"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7720818566475920418, guid: 6f0b9cba40fb4034e85871993d0c3efe,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7720818566475920418, guid: 6f0b9cba40fb4034e85871993d0c3efe,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7720818566475920418, guid: 6f0b9cba40fb4034e85871993d0c3efe,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f0b9cba40fb4034e85871993d0c3efe, type: 3}
 --- !u!1 &371319074

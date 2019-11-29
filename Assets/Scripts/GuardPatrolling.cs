@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = System.Random;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class GuardPatrolling : MonoBehaviour
@@ -42,7 +43,7 @@ public class GuardPatrolling : MonoBehaviour
                 nextWaypoints.Remove(m_PreviousWaypoint);
             }
             // Pick random waypoint from potential points
-            var random = new System.Random();
+            var random = new Random();
             var next = random.Next(0, nextWaypoints.Count);
 
             print("Next node is at index " + next + " and our nodes size is " + nextWaypoints.Count);
