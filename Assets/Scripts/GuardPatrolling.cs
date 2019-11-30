@@ -1,29 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = System.Random;
 
-[RequireComponent(typeof(NavMeshAgent))]
-public class GuardPatrolling : MonoBehaviour
+[RequireComponent(typeof(GuardBehaviour))]
+public class GuardPatrolling : MonoBehaviour, IBehaviour
 {
     private NavMeshAgent m_Agent;
-    public GuardState GuardState;
+    private GuardState m_CurrentState;
 
     [SerializeField] private List<Waypoint> m_Waypoints;
 
     [SerializeField] private Waypoint m_CurrentWaypoint;
     [SerializeField] private Waypoint m_PreviousWaypoint;
 
-    private void Start()
-    {
-        m_Agent = GetComponent<NavMeshAgent>();
-        m_CurrentWaypoint = GetClosestWaypoint();
-    }
-
     private void Update()
     {
-        if (GuardState != GuardState.Patrolling)
+        if (m_CurrentState != GuardState.Patrolling)
             return;
 
         if (!m_Agent.hasPath)
@@ -31,29 +26,31 @@ public class GuardPatrolling : MonoBehaviour
             m_Agent.SetDestination(m_CurrentWaypoint.transform.position);
         }
 
-        if (m_Agent.remainingDistance == 0f)
+        if (m_Agent.hasPath && m_Agent.remainingDistance <= 0.5f)
         {
-            // Get next possible waypoints
-            var nextWaypoints = m_CurrentWaypoint.LinkedWaypoints.ToList();
-            print(m_CurrentWaypoint.LinkedWaypoints.Count);
-            print(nextWaypoints.Count);
-            // If we just came from a node, remove it from the list of possible waypoints
-            if (m_PreviousWaypoint != null)
-            {
-                nextWaypoints.Remove(m_PreviousWaypoint);
-            }
-            // Pick random waypoint from potential points
-            var random = new Random();
-            var next = random.Next(0, nextWaypoints.Count);
-
-            print("Next node is at index " + next + " and our nodes size is " + nextWaypoints.Count);
-            // Our current node is now our previous, and the node
-            // we are about to go to is now our current node
-            m_PreviousWaypoint = m_CurrentWaypoint;
-            m_CurrentWaypoint = nextWaypoints[next];
-
-            m_Agent.SetDestination(m_CurrentWaypoint.transform.position);
+            CalculateNextWaypoint();
         }
+    }
+
+    private void CalculateNextWaypoint()
+    {
+        // Get next possible waypoints
+        var nextWaypoints = m_CurrentWaypoint.LinkedWaypoints.ToList();
+        // If we just came from a node, remove it from the list of possible waypoints
+        if (m_PreviousWaypoint != null)
+        {
+            nextWaypoints.Remove(m_PreviousWaypoint);
+        }
+        // Pick random waypoint from potential points
+        var random = new Random();
+        var next = random.Next(0, nextWaypoints.Count);
+
+        // Our current node is now our previous, and the node
+        // we are about to go to is now our current node
+        m_PreviousWaypoint = m_CurrentWaypoint;
+        m_CurrentWaypoint = nextWaypoints[next];
+
+        m_Agent.SetDestination(m_CurrentWaypoint.transform.position);
     }
 
     private Waypoint GetClosestWaypoint()
@@ -73,5 +70,27 @@ public class GuardPatrolling : MonoBehaviour
         }
 
         return closestWaypoint;
+    }
+
+    public void Initialize()
+    {
+        m_Agent = GetComponent<NavMeshAgent>();
+    }
+
+    public void UpdatedState(GuardState newState)
+    {
+        m_CurrentState = newState;
+
+        if (newState == GuardState.Patrolling)
+        {
+            if (m_CurrentWaypoint == null)
+            {
+                m_CurrentWaypoint = GetClosestWaypoint();
+            }
+            else
+            {
+                CalculateNextWaypoint();
+            }
+        }
     }
 }

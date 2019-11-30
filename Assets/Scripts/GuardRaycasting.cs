@@ -1,26 +1,32 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts;
+using UnityEngine;
 
-public class GuardRaycasting : MonoBehaviour
+public class GuardRaycasting : MonoBehaviour, IBehaviour
 {
     private GuardBehaviour Behaviour;
     public GameObject Player;
 
-    private float SeenTimer;
+    private float m_SeenTimer;
+    private float m_LostTimer;
 
-    [SerializeField] private SightState CurrentState;
-    [SerializeField] private SightState LastState;
+    [SerializeField] private SightState m_SightState;
 
-    public GuardState CurrentGuardState;
-
-    private void Awake()
-    {
-        Behaviour = GetComponent<GuardBehaviour>();
-    }
+    private GuardState m_GuardState;
 
     private void Update()
     {
         var targetDir = Player.transform.position - transform.position;
         var angle = Vector3.Angle(targetDir, transform.forward);
+
+        if (m_SightState == SightState.NotSeen && m_GuardState == GuardState.Chasing)
+        {
+            m_LostTimer += Time.deltaTime;
+
+            if (m_LostTimer >= 3f)
+            {
+                Behaviour.LostPlayer();
+            }
+        }
 
         if (angle > 65f)
         {
@@ -36,14 +42,14 @@ public class GuardRaycasting : MonoBehaviour
             return;
         }
 
-        SeenTimer += Time.deltaTime;
-        if (CurrentState == SightState.NotSeen)
+        m_SeenTimer += Time.deltaTime;
+        if (m_SightState == SightState.NotSeen)
         {
             TransitionState(SightState.ShortSeen);
         }
-        else if (CurrentState == SightState.ShortSeen)
+        else if (m_SightState == SightState.ShortSeen)
         {
-            if (SeenTimer > 2f)
+            if (m_SeenTimer > 2f)
             {
                 TransitionState(SightState.LongSeen);
             }
@@ -52,22 +58,22 @@ public class GuardRaycasting : MonoBehaviour
 
     private void TransitionState(SightState state)
     {
-        if (CurrentState == state)
+        if (m_SightState == state)
             return;
 
-        LastState = CurrentState;
-        CurrentState = state;
+        m_SightState = state;
 
         switch (state)
         {
             case SightState.NotSeen:
-                Behaviour.LostSight();
-                SeenTimer = 0f;
+                m_SeenTimer = 0f;
                 break;
             case SightState.ShortSeen:
+                m_LostTimer = 0f;
                 Behaviour.SeenPlayer();
                 break;
             case SightState.LongSeen:
+                m_LostTimer = 0f;
                 Behaviour.LongSight();
                 break;
         }
@@ -78,5 +84,15 @@ public class GuardRaycasting : MonoBehaviour
         NotSeen,
         ShortSeen,
         LongSeen
+    }
+
+    public void Initialize()
+    {
+        Behaviour = GetComponent<GuardBehaviour>();
+    }
+
+    public void UpdatedState(GuardState newState)
+    {
+        m_GuardState = newState;
     }
 }

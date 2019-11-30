@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Assets.Scripts;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -30,7 +31,7 @@ public class BroadcastSound : MonoBehaviour
 
         Debug.Log($"Found {colliders.Length} colliders");
 
-        var listeners = colliders.Where(s => s.GetComponent<EnemySoundListener>() != null);
+        var listeners = colliders.Where(s => s.GetComponent<GuardSoundListener>() != null);
 
         foreach (var listener in listeners)
         {
@@ -38,7 +39,7 @@ public class BroadcastSound : MonoBehaviour
 
             var volumeBasedOnDistance = 1 - (distance / maxDistance);
 
-            listener.GetComponent<EnemySoundListener>().TriggerSound(volumeBasedOnDistance);
+            listener.GetComponent<GuardSoundListener>().TriggerSound(volumeBasedOnDistance);
         }
     }
 }

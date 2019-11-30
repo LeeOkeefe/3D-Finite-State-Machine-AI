@@ -1,14 +1,17 @@
 ﻿using System.Linq;
+using Assets.Scripts;
+using Player;
 using UnityEngine;
 
 [RequireComponent(typeof(GuardRaycasting))]
 [RequireComponent(typeof(GuardPatrolling))]
 public class GuardBehaviour : MonoBehaviour
 {
+    [SerializeField] private GameObject m_Player;
     [SerializeField] private GuardState CurrentState;
     [SerializeField] private GuardState PreviousState;
 
-    private Animator Anim => GetComponent<Animator>();
+    private Animator m_Anim;
     private static readonly int Speed = Animator.StringToHash("Speed");
     private static readonly int Idle = Animator.StringToHash("Idle");
     private static readonly int Conversing = Animator.StringToHash("Conversing");
@@ -17,7 +20,18 @@ public class GuardBehaviour : MonoBehaviour
     {
         CurrentState = GuardState.Patrolling;
         PreviousState = GuardState.Idle;
+        m_Anim = GetComponent<Animator>();
+        InitializeBehaviourStates();
         UpdateChildrenStates();
+    }
+
+    private void InitializeBehaviourStates()
+    {
+        var behaviours = GetComponents<IBehaviour>();
+        foreach (var behaviour in behaviours)
+        {
+            behaviour.Initialize();
+        }
     }
 
     private void SetAnimation()
@@ -25,34 +39,36 @@ public class GuardBehaviour : MonoBehaviour
         switch (CurrentState)
         {
             case GuardState.Idle:
-                Anim.SetTrigger(Idle);
+                m_Anim.SetTrigger(Idle);
                 break;
             case GuardState.Patrolling:
-                Anim.SetFloat(Speed, 0.5f);
+                m_Anim.SetFloat(Speed, 0.5f);
                 break;
             case GuardState.Attacking:
                 break;
             case GuardState.Chasing:
-                Anim.SetFloat(Speed, 1f);
+                m_Anim.SetFloat(Speed, 1f);
                 break;
             case GuardState.Conversing:
-                Anim.SetTrigger(Conversing);
+                m_Anim.SetTrigger(Conversing);
                 break;
             case GuardState.Investigating:
                 break;
             case GuardState.Resetting:
                 break;
             default:
-                Anim.SetFloat(Speed, 0);
+                m_Anim.SetFloat(Speed, 0);
                 break;
         }
     }
 
-    public void LostSight()
+    public void LostPlayer()
     {
         if (IsInState(GuardState.Chasing))
         {
-            TransitionState(GuardState.Resetting);
+            GetComponent<GuardInvestigating>().SetInvestigationLocation(m_Player.transform.position);
+
+            TransitionState(GuardState.Investigating);
         }
     }
 
@@ -62,8 +78,14 @@ public class GuardBehaviour : MonoBehaviour
                       GuardState.Patrolling,
                       GuardState.Resetting))
         {
+            GetComponent<GuardInvestigating>().SetInvestigationLocation(m_Player.transform.position);
             TransitionState(GuardState.Investigating);
         }
+    }
+
+    public void EndInvestigation()
+    {
+        TransitionState(GuardState.Patrolling);
     }
 
     public void LongSight()
@@ -98,7 +120,11 @@ public class GuardBehaviour : MonoBehaviour
 
     private void UpdateChildrenStates()
     {
-        GetComponent<GuardPatrolling>().GuardState = CurrentState;
-        GetComponent<GuardRaycasting>().CurrentGuardState = CurrentState;
+        var behaviours = GetComponents<IBehaviour>();
+
+        foreach (var behaviour in behaviours)
+        {
+            behaviour.UpdatedState(CurrentState);
+        }
     }
 }

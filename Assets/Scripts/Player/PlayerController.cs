@@ -44,7 +44,8 @@ namespace Player
 
         private void FixedUpdate()
         {
-            m_Rb.velocity = Time.deltaTime * speed * m_MoveDirection;
+            var movement = Time.deltaTime * speed * m_MoveDirection;
+            m_Rb.velocity = new Vector3(movement.x, m_Rb.velocity.y, movement.z);
         }
 
         /// <summary>
