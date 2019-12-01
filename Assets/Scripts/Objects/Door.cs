@@ -18,7 +18,7 @@ namespace Objects
 
             while (transform.rotation != endRotation)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, endRotation, Time.deltaTime * 1f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, endRotation, Time.deltaTime * 0.75f);
                 yield return null;
             }
 

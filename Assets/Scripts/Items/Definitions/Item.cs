@@ -1,5 +1,8 @@
-﻿namespace Items.Definitions
+﻿using System;
+
+namespace Items.Definitions
 {
+    [Serializable]
     public class Item
     {
         public string Name { get; }

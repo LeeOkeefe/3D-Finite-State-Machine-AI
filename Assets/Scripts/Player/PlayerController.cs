@@ -20,8 +20,6 @@ namespace Player
         private static readonly int Horizontal = Animator.StringToHash("Horizontal");
         private static readonly int Vertical = Animator.StringToHash("Vertical");
 
-        private PlayerStats m_PlayerStats = new PlayerStats();
-
         private void Start()
         {
             m_Rb = GetComponent<Rigidbody>();
@@ -53,7 +51,7 @@ namespace Player
         /// </summary>
         private void CheckInteractiveObjects()
         {
-            var hits = Physics.OverlapSphere(transform.position, 1f);
+            var hits = Physics.OverlapSphere(transform.position, 1.25f);
 
             if (!hits.Any(h => h.CompareTag("InteractiveObject")))
                 return;
