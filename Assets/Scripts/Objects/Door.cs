@@ -7,18 +7,18 @@ namespace Objects
     {
         [SerializeField] private Vector3 angle;
 
-        public void Interact()
+        public virtual void Interact()
         {
             StartCoroutine(OpenDoor());
         }
 
-        private IEnumerator OpenDoor()
+        protected IEnumerator OpenDoor()
         {
             var endRotation = transform.rotation * Quaternion.Euler(angle);
 
             while (transform.rotation != endRotation)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, endRotation, Time.deltaTime * 0.75f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, endRotation, Time.deltaTime * 2.5f);
                 yield return null;
             }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Items.Definitions
 {
@@ -7,11 +8,13 @@ namespace Items.Definitions
     {
         public string Name { get; }
         public int ID { get; }
+        public Sprite Sprite { get; }
 
-        public Item(string name, int id)
+        public Item(string name, int id, Sprite sprite)
         {
             Name = name;
             ID = id;
+            Sprite = sprite;
         }
     }
 }
