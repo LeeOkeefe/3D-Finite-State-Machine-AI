@@ -2,21 +2,18 @@
 using Objects;
 using UnityEngine;
 
-namespace Player
+namespace Assets.Scripts.Player
 {
     internal sealed class PlayerController : MonoBehaviour
     {
-        [SerializeField]
-        private float speed;
-        [SerializeField]
-        private float mouseSensitivity;
-        [SerializeField]
-        private GameObject cameraPivot;
+        [SerializeField] private GameObject cameraPivot;
+        [SerializeField] private float speed;
 
-        private Rigidbody m_Rb;
         private Vector3 m_MoveDirection;
+        private Rigidbody m_Rb;
         private Animator m_Anim;
 
+        private static float MouseSensitivity => PlayerPrefs.GetFloat("Sensitivity", 30f);
         private static readonly int Horizontal = Animator.StringToHash("Horizontal");
         private static readonly int Vertical = Animator.StringToHash("Vertical");
 
@@ -78,8 +75,8 @@ namespace Player
             if (!screenRect.Contains(Input.mousePosition))
                 return;
 
-            var vertical = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity;
-            var horizontal = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity;
+            var vertical = Input.GetAxis("Mouse Y") * Time.deltaTime * MouseSensitivity;
+            var horizontal = Input.GetAxis("Mouse X") * Time.deltaTime * MouseSensitivity;
 
             cameraPivot.transform.Rotate(-vertical, 0, 0);
             transform.Rotate(0, horizontal, 0);
