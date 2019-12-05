@@ -16,7 +16,7 @@ namespace Assets.Scripts.Player
         /// </summary>
         private void CheckInteractiveObjects()
         {
-            var hits = Physics.OverlapSphere(transform.position, 0.8f);
+            var hits = Physics.OverlapSphere(transform.position, 1.2f);
 
             if (!hits.Any(h => h.CompareTag("InteractiveObject")))
                 return;
