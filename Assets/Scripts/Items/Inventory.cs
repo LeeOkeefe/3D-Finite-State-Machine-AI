@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Assets.Scripts;
-using Assets.Scripts.Items;
-using Items.Definitions;
+using Assets.Scripts.Items.Definitions;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Items
+namespace Assets.Scripts.Items
 {
     internal sealed class Inventory : MonoBehaviour
     {

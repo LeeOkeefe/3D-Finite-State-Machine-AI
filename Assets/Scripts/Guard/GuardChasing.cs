@@ -1,32 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Assets.Scripts;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(GuardBehaviour))]
-public class GuardChasing : MonoBehaviour, IBehaviour
+namespace Assets.Scripts.Guard
 {
-    [SerializeField] private GameObject m_Player;
-
-    private NavMeshAgent m_Agent;
-    private GuardState m_CurrentState;
-
-    private void Update()
+    [RequireComponent(typeof(GuardBehaviour))]
+    public class GuardChasing : MonoBehaviour, IBehaviour
     {
-        if (m_CurrentState != GuardState.Chasing)
-            return;
+        [SerializeField] private GameObject m_Player;
 
-        m_Agent.SetDestination(m_Player.transform.position);
-    }
+        private NavMeshAgent m_Agent;
+        private GuardState m_CurrentState;
 
-    public void Initialize()
-    {
-        m_Agent = GetComponent<NavMeshAgent>();
-    }
+        private void Update()
+        {
+            if (m_CurrentState != GuardState.Chasing)
+                return;
 
-    public void UpdatedState(GuardState newState)
-    {
-        m_CurrentState = newState;
+            m_Agent.SetDestination(m_Player.transform.position);
+        }
+
+        public void Initialize()
+        {
+            m_Agent = GetComponent<NavMeshAgent>();
+        }
+
+        public void UpdatedState(GuardState newState)
+        {
+            m_CurrentState = newState;
+        }
     }
 }

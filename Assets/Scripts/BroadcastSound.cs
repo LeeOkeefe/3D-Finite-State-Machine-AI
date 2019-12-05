@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Assets.Scripts;
+using Assets.Scripts.Guard;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]

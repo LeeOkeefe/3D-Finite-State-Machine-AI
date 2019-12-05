@@ -16,6 +16,9 @@ namespace Assets.Scripts.Objects
             StartCoroutine(OpenDrawer());
         }
 
+        /// <summary>
+        /// Use <see cref="Vector3.Lerp"/> to move between two positions over X seconds
+        /// </summary>
         private IEnumerator OpenDrawer()
         {
             var endPosition = transform.position + position;

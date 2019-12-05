@@ -2,46 +2,46 @@
 using System.Linq;
 using UnityEngine;
 
-public class Waypoint : MonoBehaviour
+namespace Assets.Scripts
 {
-    [SerializeField]
-    private float radius = 0.3f;
-    [SerializeField]
-    public List<Waypoint> LinkedWaypoints;
-
-    private void OnDrawGizmos()
+    public class Waypoint : MonoBehaviour
     {
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
+        [SerializeField]
+        private float radius = 0.3f;
+        [SerializeField]
+        public List<Waypoint> LinkedWaypoints;
 
-    private void OnDrawGizmosSelected()
-    {
-        foreach (var linkedWaypoint in LinkedWaypoints)
+        private void OnDrawGizmos()
         {
-            if (linkedWaypoint == null)
-                continue;
-
-            Gizmos.DrawLine(transform.position, linkedWaypoint.transform.position);
+            Gizmos.DrawWireSphere(transform.position, radius);
         }
-    }
 
-
-    public void CalculateLinkedNodes()
-    {
-        LinkedWaypoints.Clear();
-
-        // Gather nodes under parent
-        var waypoints = transform.parent.GetComponentsInChildren<Waypoint>().ToList();
-        waypoints.Remove(this);
-
-        // Cast a ray from ourself to all other nodes under the parent
-        foreach (var waypoint in waypoints)
+        private void OnDrawGizmosSelected()
         {
-            Physics.Linecast(transform.position, waypoint.transform.position, out var hit);
-
-            if (hit.transform == waypoint.transform)
+            foreach (var linkedWaypoint in LinkedWaypoints)
             {
-                LinkedWaypoints.Add(waypoint);
+                if (linkedWaypoint == null)
+                    continue;
+
+                Gizmos.DrawLine(transform.position, linkedWaypoint.transform.position);
+            }
+        }
+
+        public void CalculateLinkedNodes()
+        {
+            LinkedWaypoints.Clear();
+
+            var waypoints = transform.parent.GetComponentsInChildren<Waypoint>().ToList();
+            waypoints.Remove(this);
+
+            foreach (var waypoint in waypoints)
+            {
+                Physics.Linecast(transform.position, waypoint.transform.position, out var hit);
+
+                if (hit.transform == waypoint.transform)
+                {
+                    LinkedWaypoints.Add(waypoint);
+                }
             }
         }
     }

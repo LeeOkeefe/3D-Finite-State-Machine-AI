@@ -1,5 +1,4 @@
-﻿using Items;
-using Items.Definitions;
+﻿using Assets.Scripts.Items.Definitions;
 using UnityEngine;
 
 namespace Assets.Scripts.Items
@@ -11,12 +10,12 @@ namespace Assets.Scripts.Items
         [SerializeField] private Sprite m_ItemSprite;
         [SerializeField] private Inventory m_Inventory;
 
-        public Item Item;
+        private Item m_Item;
 
         private void Start()
         {
-            Item = new Item(m_ItemName, m_ItemId, m_ItemSprite);
-            GameManager.Instance.ExistingItems.Add(Item);
+            m_Item = new Item(m_ItemName, m_ItemId, m_ItemSprite);
+            GameManager.Instance.ExistingItems.Add(m_Item);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -24,7 +23,7 @@ namespace Assets.Scripts.Items
             if (!other.CompareTag("Player")) 
                 return;
 
-            m_Inventory.AddItem(Item);
+            m_Inventory.AddItem(m_Item);
             Destroy(gameObject);
         }
     }
