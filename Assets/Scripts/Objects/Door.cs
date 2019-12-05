@@ -16,6 +16,9 @@ namespace Assets.Scripts.Objects
             StartCoroutine(OpenDoor());
         }
 
+        /// <summary>
+        /// Rotate the door open using <see cref="Quaternion.Slerp"/>
+        /// </summary>
         protected IEnumerator OpenDoor()
         {
             if (m_CurrentTime > 0)

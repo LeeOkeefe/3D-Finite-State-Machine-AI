@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Items.Definitions
+namespace Assets.Scripts.Items.Definitions
 {
     [Serializable]
     public class Item

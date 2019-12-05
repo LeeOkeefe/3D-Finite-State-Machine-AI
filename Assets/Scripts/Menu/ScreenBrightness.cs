@@ -15,7 +15,7 @@ namespace Assets.Scripts.Menu
         }
 
         /// <summary>
-        /// Set our audioSource volume to the value of the slider
+        /// Set our screen brightness to the value of the slider
         /// </summary>
         public void ValueChangeCheck()
         {

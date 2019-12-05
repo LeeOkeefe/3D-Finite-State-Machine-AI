@@ -1,10 +1,13 @@
-﻿public enum GuardState
+﻿namespace Assets.Scripts.Guard
 {
-    Attacking,
-    Chasing,
-    Conversing,
-    Idle,
-    Investigating,
-    Patrolling,
-    Resetting
+    public enum GuardState
+    {
+        Attacking,
+        Chasing,
+        Conversing,
+        Idle,
+        Investigating,
+        Patrolling,
+        Resetting
+    }
 }

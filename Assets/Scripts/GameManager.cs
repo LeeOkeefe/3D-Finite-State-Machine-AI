@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Items.Definitions;
+using Assets.Scripts.Items.Definitions;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +12,6 @@ namespace Assets.Scripts
         public static GameManager Instance { get; private set; }
 
         [SerializeField] private GameObject m_NotificationMessage;
-        [SerializeField] private GameObject m_ErrorMessage;
 
         public List<Item> ExistingItems = new List<Item>();
 
@@ -25,11 +24,17 @@ namespace Assets.Scripts
                 Instance = this;
         }
 
+        /// <summary>
+        /// Returns the item based on the ID if it exists in the game
+        /// </summary>
         public Item FindExistingItemById(int id)
         {
             return Instance.ExistingItems.FirstOrDefault(item => item.ID == id);
         }
 
+        /// <summary>
+        /// Show notification message for one second
+        /// </summary>
         public IEnumerator ShowMessage(string message)
         {
             UserInterfaceUtils.ToggleCanvasGroup(m_NotificationMessage.GetComponent<CanvasGroup>(), true);

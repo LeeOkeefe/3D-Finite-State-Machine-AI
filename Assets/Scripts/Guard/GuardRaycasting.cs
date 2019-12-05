@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Guard;
 using UnityEngine;
 
 public class GuardRaycasting : MonoBehaviour, IBehaviour

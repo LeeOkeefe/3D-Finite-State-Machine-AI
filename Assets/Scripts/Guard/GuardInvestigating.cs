@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Guard
 {
     [RequireComponent(typeof(GuardBehaviour))]
     public class GuardInvestigating : MonoBehaviour, IBehaviour
