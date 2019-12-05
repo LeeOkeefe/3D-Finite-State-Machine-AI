@@ -13,7 +13,8 @@ namespace Assets.Scripts.Objects
         {
             if (!inventory.HasItem(itemIdRequired))
             {
-                Debug.Log("You require a Mortuary Key to unlock the door.");
+                var item = GameManager.Instance.FindExistingItemById(itemIdRequired);
+                StartCoroutine(GameManager.Instance.ShowMessage(item.Name + " is required to unlock this door."));
             }
             else
             {

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Objects;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
@@ -25,8 +23,6 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
-            CheckInteractiveObjects();
-
             var horizontalMovement = Input.GetAxisRaw("Horizontal");
             var verticalMovement = Input.GetAxisRaw("Vertical");
 
@@ -41,28 +37,6 @@ namespace Assets.Scripts.Player
         {
             var movement = Time.deltaTime * speed * m_MoveDirection;
             m_Rb.velocity = new Vector3(movement.x, m_Rb.velocity.y, movement.z);
-        }
-
-        /// <summary>
-        /// Calls interact on any interactive objects we hit with an <see cref="Physics.OverlapSphere"/>
-        /// </summary>
-        private void CheckInteractiveObjects()
-        {
-            var hits = Physics.OverlapSphere(transform.position, 1.25f);
-
-            if (!hits.Any(h => h.CompareTag("InteractiveObject")))
-                return;
-
-            var interactiveObjects = hits.Where(h => h.CompareTag("InteractiveObject"));
-
-            foreach (var interactiveObject in interactiveObjects)
-            {
-                if (Vector3.Distance(transform.position, interactiveObject.transform.position) < 3 && Input.GetKeyDown(KeyCode.E))
-                {
-                    var interactive = interactiveObject.transform.GetComponent(typeof(IInteractive)) as IInteractive;
-                    interactive?.Interact();
-                }
-            }
         }
 
         /// <summary>

@@ -375,6 +375,21 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ValueChangeCheck
       objectReference: {fileID: 0}
+    - target: {fileID: 114534377219439178, guid: 62c936eb2f7ddb640927fbd160b6574d,
+        type: 3}
+      propertyPath: m_MaxValue
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 114534377219439178, guid: 62c936eb2f7ddb640927fbd160b6574d,
+        type: 3}
+      propertyPath: m_MinValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114534377219439178, guid: 62c936eb2f7ddb640927fbd160b6574d,
+        type: 3}
+      propertyPath: m_Value
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 114841945206538968, guid: 62c936eb2f7ddb640927fbd160b6574d,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target

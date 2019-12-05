@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts;
 using Assets.Scripts.Items;
 using Items.Definitions;
 using UnityEngine;
@@ -41,6 +42,11 @@ namespace Items
         public bool HasItem(int id)
         {
             return items.Any(i => i.ID == id);
+        }
+
+        public Item FindItemById(int id)
+        {
+            return items.FirstOrDefault(item => item.ID == id);
         }
 
         private Image FindEmptySlot()

@@ -16,6 +16,7 @@ namespace Assets.Scripts.Items
         private void Start()
         {
             Item = new Item(m_ItemName, m_ItemId, m_ItemSprite);
+            GameManager.Instance.ExistingItems.Add(Item);
         }
 
         private void OnTriggerEnter(Collider other)
