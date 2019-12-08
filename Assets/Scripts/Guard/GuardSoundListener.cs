@@ -2,21 +2,31 @@
 
 namespace Assets.Scripts.Guard
 {
+    [RequireComponent(typeof(GuardBehaviour))]
     public class GuardSoundListener : MonoBehaviour, IBehaviour
     {
-        public void TriggerSound(float volumeScale)
+        private GuardState m_CurrentState;
+        private GuardBehaviour m_Behaviour;
+
+        public void TriggerSound(float volumeScale, Vector3 position)
         {
             Debug.Log($"I heard something at volume {volumeScale}!");
+
+            if (m_CurrentState == GuardState.Chasing)
+                return;
+
+            m_Behaviour.HeardAudioSource(position);
         }
 
         public void Initialize()
         {
-            throw new System.NotImplementedException();
+            m_Behaviour = GetComponent<GuardBehaviour>();
+            Debug.Log("GUARD SOUND LISTENER INITIALIZED");
         }
 
-        public void UpdatedState(GuardState newState)
+        public void UpdateState(GuardState newState)
         {
-            throw new System.NotImplementedException();
+            m_CurrentState = newState;
         }
     }
 }

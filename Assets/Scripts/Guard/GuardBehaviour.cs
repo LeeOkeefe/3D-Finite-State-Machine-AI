@@ -66,9 +66,7 @@ namespace Assets.Scripts.Guard
         {
             if (IsInState(GuardState.Chasing))
             {
-                GetComponent<GuardInvestigating>().SetInvestigationLocation(m_Player.transform.position);
-
-                TransitionState(GuardState.Investigating);
+                SetInvestigation(m_Player.transform.position);
             }
         }
 
@@ -78,8 +76,15 @@ namespace Assets.Scripts.Guard
                 GuardState.Patrolling,
                 GuardState.Resetting))
             {
-                GetComponent<GuardInvestigating>().SetInvestigationLocation(m_Player.transform.position);
-                TransitionState(GuardState.Investigating);
+                SetInvestigation(m_Player.transform.position);
+            }
+        }
+
+        public void HeardAudioSource(Vector3 position)
+        {
+            if (!IsInState(GuardState.Chasing))
+            {
+                SetInvestigation(position);
             }
         }
 
@@ -97,6 +102,12 @@ namespace Assets.Scripts.Guard
             {
                 TransitionState(GuardState.Chasing);
             }
+        }
+
+        private void SetInvestigation(Vector3 position)
+        {
+            GetComponent<GuardInvestigating>().SetInvestigationLocation(position);
+            TransitionState(GuardState.Investigating);
         }
 
         private bool IsInState(params GuardState[] states)
@@ -124,7 +135,7 @@ namespace Assets.Scripts.Guard
 
             foreach (var behaviour in behaviours)
             {
-                behaviour.UpdatedState(CurrentState);
+                behaviour.UpdateState(CurrentState);
             }
         }
     }

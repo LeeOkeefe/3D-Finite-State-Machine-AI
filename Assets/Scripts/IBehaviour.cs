@@ -6,6 +6,6 @@ namespace Assets.Scripts
     public interface IBehaviour
     {
         void Initialize();
-        void UpdatedState(GuardState newState);
+        void UpdateState(GuardState newState);
     }
 }
