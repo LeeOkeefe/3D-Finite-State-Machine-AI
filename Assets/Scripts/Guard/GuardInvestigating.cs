@@ -47,7 +47,7 @@ namespace Assets.Scripts.Guard
             m_Behaviour = GetComponent<GuardBehaviour>();
         }
 
-        public void UpdatedState(GuardState newState)
+        public void UpdateState(GuardState newState)
         {
             m_Timer = 0f;
             m_CurrentState = newState;

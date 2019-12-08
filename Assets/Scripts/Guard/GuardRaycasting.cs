@@ -92,7 +92,7 @@ public class GuardRaycasting : MonoBehaviour, IBehaviour
         Behaviour = GetComponent<GuardBehaviour>();
     }
 
-    public void UpdatedState(GuardState newState)
+    public void UpdateState(GuardState newState)
     {
         m_GuardState = newState;
     }

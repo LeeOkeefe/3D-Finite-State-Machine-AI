@@ -24,7 +24,7 @@ namespace Assets.Scripts.Guard
             m_Agent = GetComponent<NavMeshAgent>();
         }
 
-        public void UpdatedState(GuardState newState)
+        public void UpdateState(GuardState newState)
         {
             m_CurrentState = newState;
         }

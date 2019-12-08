@@ -11,16 +11,18 @@ public class BroadcastSound : MonoBehaviour
     private void Awake()
     {
         mySource = GetComponent<AudioSource>();
-
-        Debug.Log("Hello world!");
-
-        BroadcastSoundPlayed();
     }
     
     public void Broadcast(AudioClip clip, float maxDistance)
     {
         mySource.maxDistance = maxDistance;
         mySource.PlayOneShot(clip);
+        BroadcastSoundPlayed();
+    }
+
+    public void Broadcast()
+    {
+        mySource.Play();
         BroadcastSoundPlayed();
     }
 
@@ -40,7 +42,7 @@ public class BroadcastSound : MonoBehaviour
 
             var volumeBasedOnDistance = 1 - (distance / maxDistance);
 
-            listener.GetComponent<GuardSoundListener>().TriggerSound(volumeBasedOnDistance);
+            listener.GetComponent<GuardSoundListener>().TriggerSound(volumeBasedOnDistance, transform.position);
         }
     }
 }
