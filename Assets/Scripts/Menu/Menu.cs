@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Assets.Scripts.Menu
+namespace Menu
 {
     internal sealed class Menu : MonoBehaviour
     {

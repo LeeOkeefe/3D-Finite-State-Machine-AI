@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using Objects;
 using UnityEngine;
 
-namespace Assets.Scripts.Objects
+namespace Objects
 {
     internal sealed class Drawer : MonoBehaviour, IInteractive
     {

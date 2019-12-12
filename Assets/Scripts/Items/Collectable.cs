@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Items.Definitions;
+﻿using Items.Definitions;
 using UnityEngine;
 
-namespace Assets.Scripts.Items
+namespace Items
 {
     internal sealed class Collectable : MonoBehaviour
     {

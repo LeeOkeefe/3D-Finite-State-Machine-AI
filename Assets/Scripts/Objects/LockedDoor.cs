@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Items;
-using Objects;
+﻿using Items;
 using UnityEngine;
 
-namespace Assets.Scripts.Objects
+namespace Objects
 {
     internal sealed class LockedDoor : Door, IInteractive
     {

@@ -1,11 +1,8 @@
-﻿using Assets.Scripts.Guard;
+﻿using Guard;
 using UnityEngine;
 
-namespace Assets.Scripts
+public interface IBehaviour
 {
-    public interface IBehaviour
-    {
-        void Initialize();
-        void UpdateState(GuardState newState);
-    }
+    void Initialize();
+    void UpdateState(GuardState newState);
 }

@@ -1,19 +1,25 @@
 ﻿using System.Collections;
-using Objects;
 using UnityEngine;
 
-namespace Assets.Scripts.Objects
+namespace Objects
 {
     internal class Door : MonoBehaviour, IInteractive
     {
         [SerializeField] private Vector3 angle;
+        private AudioSource m_Audio;
 
         private float m_OpenTime = 2;
         private float m_CurrentTime;
 
+        private void Start()
+        {
+            m_Audio = GetComponent<AudioSource>();
+        }
+
         public virtual void Interact()
         {
             StartCoroutine(OpenDoor());
+            m_Audio.PlayOneShot(m_Audio.clip);
         }
 
         /// <summary>

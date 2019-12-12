@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Player
+namespace Player
 {
     internal sealed class PlayerController : MonoBehaviour
     {
+        [SerializeField] private BroadcastSound footsteps;
         [SerializeField] private GameObject cameraPivot;
         [SerializeField] private float speed;
 
         private Vector3 m_MoveDirection;
         private Rigidbody m_Rb;
         private Animator m_Anim;
+
 
         private static float MouseSensitivity => PlayerPrefs.GetFloat("Sensitivity", 30f);
         private static readonly int Horizontal = Animator.StringToHash("Horizontal");
@@ -23,6 +25,11 @@ namespace Assets.Scripts.Player
 
         private void Update()
         {
+            if (m_Anim.GetFloat(Horizontal) != 0 || m_Anim.GetFloat(Vertical) != 0)
+            {
+                footsteps.Broadcast();
+            }
+
             var horizontalMovement = Input.GetAxisRaw("Horizontal");
             var verticalMovement = Input.GetAxisRaw("Vertical");
 

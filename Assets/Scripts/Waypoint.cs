@@ -2,46 +2,43 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts
+public class Waypoint : MonoBehaviour
 {
-    public class Waypoint : MonoBehaviour
+    [SerializeField]
+    private float radius = 0.3f;
+    [SerializeField]
+    public List<Waypoint> LinkedWaypoints;
+
+    private void OnDrawGizmos()
     {
-        [SerializeField]
-        private float radius = 0.3f;
-        [SerializeField]
-        public List<Waypoint> LinkedWaypoints;
+        Gizmos.DrawWireSphere(transform.position, radius);
+    }
 
-        private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
+    {
+        foreach (var linkedWaypoint in LinkedWaypoints)
         {
-            Gizmos.DrawWireSphere(transform.position, radius);
+            if (linkedWaypoint == null)
+                continue;
+
+            Gizmos.DrawLine(transform.position, linkedWaypoint.transform.position);
         }
+    }
 
-        private void OnDrawGizmosSelected()
+    public void CalculateLinkedNodes()
+    {
+        LinkedWaypoints.Clear();
+
+        var waypoints = transform.parent.GetComponentsInChildren<Waypoint>().ToList();
+        waypoints.Remove(this);
+
+        foreach (var waypoint in waypoints)
         {
-            foreach (var linkedWaypoint in LinkedWaypoints)
+            Physics.Linecast(transform.position, waypoint.transform.position, out var hit);
+
+            if (hit.transform == waypoint.transform)
             {
-                if (linkedWaypoint == null)
-                    continue;
-
-                Gizmos.DrawLine(transform.position, linkedWaypoint.transform.position);
-            }
-        }
-
-        public void CalculateLinkedNodes()
-        {
-            LinkedWaypoints.Clear();
-
-            var waypoints = transform.parent.GetComponentsInChildren<Waypoint>().ToList();
-            waypoints.Remove(this);
-
-            foreach (var waypoint in waypoints)
-            {
-                Physics.Linecast(transform.position, waypoint.transform.position, out var hit);
-
-                if (hit.transform == waypoint.transform)
-                {
-                    LinkedWaypoints.Add(waypoint);
-                }
+                LinkedWaypoints.Add(waypoint);
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Menu
+namespace Menu
 {
     internal sealed class MusicVolume : MonoBehaviour
     {

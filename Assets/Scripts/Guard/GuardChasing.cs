@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace Assets.Scripts.Guard
+namespace Guard
 {
     [RequireComponent(typeof(GuardBehaviour))]
     public class GuardChasing : MonoBehaviour, IBehaviour

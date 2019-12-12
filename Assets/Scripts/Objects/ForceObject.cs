@@ -1,14 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Objects
 {
+    [RequireComponent(typeof(AudioSource))]
     internal sealed class ForceObject : MonoBehaviour
     {
         [SerializeField]
         [Range(10, 500)]
         private float force = 150;
 
-        private Rigidbody Rb => GetComponent<Rigidbody>();
+        private Rigidbody m_Rb; 
+        private AudioSource m_Audio;
+
+        private void Start()
+        {
+            m_Rb = GetComponent<Rigidbody>();
+            m_Audio = GetComponent<AudioSource>();
+        }
 
         /// <summary>
         /// Calculates the opposite direction of the given collider,
@@ -23,7 +32,15 @@ namespace Objects
 
         private void OnTriggerEnter(Collider other)
         {
-            AddForce(other.GetComponent<Collider>(), Rb);
+            AddForce(other.GetComponent<Collider>(), m_Rb);
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if (other.relativeVelocity.magnitude >= 3.5)
+            {
+                m_Audio.PlayOneShot(m_Audio.clip);
+            }
         }
     }
 }

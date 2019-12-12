@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Guard
+﻿namespace Guard
 {
     public enum GuardState
     {
@@ -8,6 +8,5 @@
         Idle,
         Investigating,
         Patrolling,
-        Resetting
     }
 }

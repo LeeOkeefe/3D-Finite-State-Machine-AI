@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace Assets.Scripts.Guard
+namespace Guard
 {
     [RequireComponent(typeof(GuardRaycasting))]
     [RequireComponent(typeof(GuardPatrolling))]
@@ -15,6 +15,8 @@ namespace Assets.Scripts.Guard
         private static readonly int Speed = Animator.StringToHash("Speed");
         private static readonly int Idle = Animator.StringToHash("Idle");
         private static readonly int Conversing = Animator.StringToHash("Conversing");
+        private static readonly int Attack = Animator.StringToHash("Attack");
+        private static readonly int Investigate = Animator.StringToHash("Investigate");
 
         private void Awake()
         {
@@ -28,6 +30,7 @@ namespace Assets.Scripts.Guard
         private void InitializeBehaviourStates()
         {
             var behaviours = GetComponents<IBehaviour>();
+
             foreach (var behaviour in behaviours)
             {
                 behaviour.Initialize();
@@ -45,6 +48,7 @@ namespace Assets.Scripts.Guard
                     m_Anim.SetFloat(Speed, 0.5f);
                     break;
                 case GuardState.Attacking:
+                    m_Anim.SetTrigger(Attack);
                     break;
                 case GuardState.Chasing:
                     m_Anim.SetFloat(Speed, 1f);
@@ -53,8 +57,7 @@ namespace Assets.Scripts.Guard
                     m_Anim.SetTrigger(Conversing);
                     break;
                 case GuardState.Investigating:
-                    break;
-                case GuardState.Resetting:
+                    m_Anim.SetTrigger(Investigate);
                     break;
                 default:
                     m_Anim.SetFloat(Speed, 0);
@@ -73,8 +76,7 @@ namespace Assets.Scripts.Guard
         public void SeenPlayer()
         {
             if (IsInState(GuardState.Idle,
-                GuardState.Patrolling,
-                GuardState.Resetting))
+                GuardState.Patrolling))
             {
                 SetInvestigation(m_Player.transform.position);
             }
@@ -96,9 +98,8 @@ namespace Assets.Scripts.Guard
         public void LongSight()
         {
             if (IsInState(GuardState.Idle,
-                GuardState.Investigating,
-                GuardState.Resetting,
-                GuardState.Patrolling))
+                          GuardState.Investigating,
+                          GuardState.Patrolling))
             {
                 TransitionState(GuardState.Chasing);
             }

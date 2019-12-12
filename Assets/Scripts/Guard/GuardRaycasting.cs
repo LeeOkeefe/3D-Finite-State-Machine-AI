@@ -1,99 +1,100 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Guard;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class GuardRaycasting : MonoBehaviour, IBehaviour
+namespace Guard
 {
-    private GuardBehaviour Behaviour;
-    public GameObject Player;
-
-    private float m_SeenTimer;
-    private float m_LostTimer;
-
-    [SerializeField] private SightState m_SightState;
-
-    private GuardState m_GuardState;
-
-    private void Update()
+    public class GuardRaycasting : MonoBehaviour, IBehaviour
     {
-        var targetDir = Player.transform.position - transform.position;
-        var angle = Vector3.Angle(targetDir, transform.forward);
+        private GuardBehaviour Behaviour;
+        public GameObject Player;
 
-        if (m_SightState == SightState.NotSeen && m_GuardState == GuardState.Chasing)
+        private float m_SeenTimer;
+        private float m_LostTimer;
+
+        [SerializeField] private SightState m_SightState;
+
+        private GuardState m_GuardState;
+
+        private void Update()
         {
-            m_LostTimer += Time.deltaTime;
+            var targetDir = Player.transform.position - transform.position;
+            var angle = Vector3.Angle(targetDir, transform.forward);
 
-            if (m_LostTimer >= 3f)
+            if (m_SightState == SightState.NotSeen && m_GuardState == GuardState.Chasing)
             {
-                Behaviour.LostPlayer();
+                m_LostTimer += Time.deltaTime;
+
+                if (m_LostTimer >= 3f)
+                {
+                    Behaviour.LostPlayer();
+                }
+            }
+
+            if (angle > 80f)
+            {
+                TransitionState(SightState.NotSeen);
+                return;
+            }
+
+            Physics.Linecast(transform.position, Player.transform.position, out var hitInfo);
+
+            if (hitInfo.transform != Player.transform)
+            {
+                TransitionState(SightState.NotSeen);
+                return;
+            }
+
+            m_SeenTimer += Time.deltaTime;
+            if (m_SightState == SightState.NotSeen)
+            {
+                TransitionState(SightState.ShortSeen);
+            }
+            else if (m_SightState == SightState.ShortSeen)
+            {
+                if (m_SeenTimer > 1.5f)
+                {
+                    TransitionState(SightState.LongSeen);
+                }
             }
         }
 
-        if (angle > 65f)
+        private void TransitionState(SightState state)
         {
-            TransitionState(SightState.NotSeen);
-            return;
-        }
+            if (m_SightState == state)
+                return;
 
-        Physics.Linecast(transform.position, Player.transform.position, out var hitInfo);
+            m_SightState = state;
 
-        if (hitInfo.transform != Player.transform)
-        {
-            TransitionState(SightState.NotSeen);
-            return;
-        }
-
-        m_SeenTimer += Time.deltaTime;
-        if (m_SightState == SightState.NotSeen)
-        {
-            TransitionState(SightState.ShortSeen);
-        }
-        else if (m_SightState == SightState.ShortSeen)
-        {
-            if (m_SeenTimer > 2f)
+            switch (state)
             {
-                TransitionState(SightState.LongSeen);
+                case SightState.NotSeen:
+                    m_SeenTimer = 0f;
+                    break;
+                case SightState.ShortSeen:
+                    m_LostTimer = 0f;
+                    Behaviour.SeenPlayer();
+                    break;
+                case SightState.LongSeen:
+                    m_LostTimer = 0f;
+                    Behaviour.LongSight();
+                    break;
             }
         }
-    }
 
-    private void TransitionState(SightState state)
-    {
-        if (m_SightState == state)
-            return;
-
-        m_SightState = state;
-
-        switch (state)
+        private enum SightState
         {
-            case SightState.NotSeen:
-                m_SeenTimer = 0f;
-                break;
-            case SightState.ShortSeen:
-                m_LostTimer = 0f;
-                Behaviour.SeenPlayer();
-                break;
-            case SightState.LongSeen:
-                m_LostTimer = 0f;
-                Behaviour.LongSight();
-                break;
+            NotSeen,
+            ShortSeen,
+            LongSeen
         }
-    }
 
-    private enum SightState
-    {
-        NotSeen,
-        ShortSeen,
-        LongSeen
-    }
+        public void Initialize()
+        {
+            Behaviour = GetComponent<GuardBehaviour>();
+        }
 
-    public void Initialize()
-    {
-        Behaviour = GetComponent<GuardBehaviour>();
-    }
-
-    public void UpdateState(GuardState newState)
-    {
-        m_GuardState = newState;
+        public void UpdateState(GuardState newState)
+        {
+            m_GuardState = newState;
+        }
     }
 }

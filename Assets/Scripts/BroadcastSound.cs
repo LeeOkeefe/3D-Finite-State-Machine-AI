@@ -1,34 +1,36 @@
 ﻿using System.Linq;
-using Assets.Scripts;
-using Assets.Scripts.Guard;
+using Guard;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class BroadcastSound : MonoBehaviour
 {
-    private AudioSource mySource;
+    private AudioSource m_MySource;
 
     private void Awake()
     {
-        mySource = GetComponent<AudioSource>();
+        m_MySource = GetComponent<AudioSource>();
     }
     
     public void Broadcast(AudioClip clip, float maxDistance)
     {
-        mySource.maxDistance = maxDistance;
-        mySource.PlayOneShot(clip);
+        m_MySource.maxDistance = maxDistance;
+        m_MySource.PlayOneShot(clip);
         BroadcastSoundPlayed();
     }
 
     public void Broadcast()
     {
-        mySource.Play();
+        if (m_MySource.isPlaying)
+            return;
+
+        m_MySource.PlayOneShot(m_MySource.clip);
         BroadcastSoundPlayed();
     }
 
     private void BroadcastSoundPlayed()
     {
-        var maxDistance = mySource.maxDistance;
+        var maxDistance = m_MySource.maxDistance;
 
         var colliders = Physics.OverlapSphere(transform.position, maxDistance);
 

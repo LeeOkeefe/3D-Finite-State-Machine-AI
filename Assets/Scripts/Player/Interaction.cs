@@ -2,7 +2,7 @@
 using Objects;
 using UnityEngine;
 
-namespace Assets.Scripts.Player
+namespace Player
 {
     internal sealed class Interaction : MonoBehaviour
     {

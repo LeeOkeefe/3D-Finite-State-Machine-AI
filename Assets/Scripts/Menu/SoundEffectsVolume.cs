@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using AudioListener = UnityEngine.AudioListener;
 
-namespace Assets.Scripts.Menu
+namespace Menu
 {
     internal sealed class SoundEffectsVolume : MonoBehaviour
     {

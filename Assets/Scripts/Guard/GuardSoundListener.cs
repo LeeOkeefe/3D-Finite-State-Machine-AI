@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Guard
+namespace Guard
 {
     [RequireComponent(typeof(GuardBehaviour))]
     public class GuardSoundListener : MonoBehaviour, IBehaviour
@@ -21,7 +21,6 @@ namespace Assets.Scripts.Guard
         public void Initialize()
         {
             m_Behaviour = GetComponent<GuardBehaviour>();
-            Debug.Log("GUARD SOUND LISTENER INITIALIZED");
         }
 
         public void UpdateState(GuardState newState)

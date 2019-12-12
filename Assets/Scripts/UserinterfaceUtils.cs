@@ -1,18 +1,15 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts
+public static class UserInterfaceUtils
 {
-    public static class UserInterfaceUtils
+    /// <summary>
+    /// Pass in true or false to determine whether the canvas group
+    /// options are enabled or disabled
+    /// </summary>
+    public static void ToggleCanvasGroup(CanvasGroup group, bool show)
     {
-        /// <summary>
-        /// Pass in true or false to determine whether the canvas group
-        /// options are enabled or disabled
-        /// </summary>
-        public static void ToggleCanvasGroup(CanvasGroup group, bool show)
-        {
-            group.alpha = show ? 1 : 0;
-            group.blocksRaycasts = show;
-            group.interactable = show;
-        }
+        group.alpha = show ? 1 : 0;
+        group.blocksRaycasts = show;
+        group.interactable = show;
     }
 }
