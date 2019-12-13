@@ -18,11 +18,19 @@ namespace Player
 
         public void Damage(int damage)
         {
+            if (m_PlayerHealth.IsDead)
+            {
+                Debug.Log("Player is dead");
+            }
+
             m_PlayerHealth.DamageHealth(damage);
         }
 
         public void Heal(int health)
         {
+            if (m_PlayerHealth.IsDead)
+                return;
+
             m_PlayerHealth.Heal(health);
         }
     }

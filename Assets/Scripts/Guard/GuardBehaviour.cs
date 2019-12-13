@@ -59,9 +59,6 @@ namespace Guard
                 case GuardState.Investigating:
                     m_Anim.SetTrigger(Investigate);
                     break;
-                default:
-                    m_Anim.SetFloat(Speed, 0);
-                    break;
             }
         }
 

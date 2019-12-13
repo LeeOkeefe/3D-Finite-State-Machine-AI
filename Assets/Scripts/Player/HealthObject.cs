@@ -6,7 +6,7 @@ namespace Player
     {
         public int CurrentHealth { get; private set; }
         public int MaxHealth { get; }
-        public bool IsDead { get; private set; }
+        public bool IsDead => CurrentHealth <= 0;
 
         public HealthObject(int maxHealth)
         {
@@ -33,7 +33,6 @@ namespace Player
             if (CurrentHealth <= 0)
             {
                 CurrentHealth = 0;
-                IsDead = true;
             }
         }
 

@@ -28,13 +28,14 @@ public class BroadcastSound : MonoBehaviour
         BroadcastSoundPlayed();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void BroadcastSoundPlayed()
     {
         var maxDistance = m_MySource.maxDistance;
 
         var colliders = Physics.OverlapSphere(transform.position, maxDistance);
-
-        Debug.Log($"Found {colliders.Length} colliders");
 
         var listeners = colliders.Where(s => s.GetComponent<GuardSoundListener>() != null);
 

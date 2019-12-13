@@ -10,12 +10,15 @@ namespace Guard
         private PlayerHealth m_PlayerHealth;
         private GuardState m_CurrentState;
 
-        private void AttackPlayer()
+        private void Update()
         {
             if (m_CurrentState != GuardState.Attacking)
                 return;
 
-            m_PlayerHealth.Kill();
+            if (Vector3.Distance(transform.position, player.transform.position) < 2)
+            {
+                m_PlayerHealth.Kill();
+            }
         }
 
         public void Initialize()
