@@ -28,9 +28,6 @@ public class BroadcastSound : MonoBehaviour
         BroadcastSoundPlayed();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void BroadcastSoundPlayed()
     {
         var maxDistance = m_MySource.maxDistance;

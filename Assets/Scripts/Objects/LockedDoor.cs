@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Objects
 {
-    internal sealed class LockedDoor : Door, IInteractive
+    internal sealed class LockedDoor : Door
     {
         [SerializeField] private Inventory inventory;
         [SerializeField] private int itemIdRequired;

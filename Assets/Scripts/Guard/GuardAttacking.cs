@@ -15,7 +15,7 @@ namespace Guard
             if (m_CurrentState != GuardState.Attacking)
                 return;
 
-            if (Vector3.Distance(transform.position, player.transform.position) < 2)
+            if (Vector3.Distance(transform.position, player.transform.position) < 1)
             {
                 m_PlayerHealth.Kill();
             }

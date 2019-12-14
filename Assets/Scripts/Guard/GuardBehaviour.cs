@@ -79,6 +79,19 @@ namespace Guard
             }
         }
 
+        public void SetIdle()
+        {
+            if (IsInState(GuardState.Patrolling))
+            {
+                TransitionState(GuardState.Idle);
+            }
+        }
+
+        public void EndIdle()
+        {
+            TransitionState(GuardState.Patrolling);
+        }
+
         public void HeardAudioSource(Vector3 position)
         {
             if (!IsInState(GuardState.Chasing))
