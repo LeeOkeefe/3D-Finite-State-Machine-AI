@@ -32,31 +32,6 @@ namespace Guard
             }
         }
 
-        /*private void SetAnimation()
-        {
-            switch (CurrentState)
-            {
-                case GuardState.Idle:
-                    animator.SetTrigger(Idle);
-                    break;
-                case GuardState.Patrolling:
-                    animator.SetFloat(Speed, 0.5f);
-                    break;
-                case GuardState.Attacking:
-                    animator.SetTrigger(Attack);
-                    break;
-                case GuardState.Chasing:
-                    animator.SetFloat(Speed, 1f);
-                    break;
-                case GuardState.Conversing:
-                    animator.SetTrigger(Conversing);
-                    break;
-                case GuardState.Investigating:
-                    animator.SetTrigger(Investigate);
-                    break;
-            }
-        }*/
-
         public void LostPlayer()
         {
             if (IsInState(GuardState.Chasing))
@@ -74,6 +49,11 @@ namespace Guard
             }
         }
 
+        public void AttackPlayer()
+        {
+            TransitionState(GuardState.Attacking);
+        }
+
         public void SetIdle()
         {
             if (IsInState(GuardState.Patrolling))
@@ -89,7 +69,8 @@ namespace Guard
 
         public void HeardAudioSource(Vector3 position)
         {
-            if (!IsInState(GuardState.Chasing))
+            if (!IsInState(GuardState.Chasing,
+                           GuardState.Attacking))
             {
                 SetInvestigation(position);
             }

@@ -19,6 +19,11 @@ namespace Guard
                 return;
 
             m_Agent.SetDestination(m_Player.transform.position);
+
+            if (Vector3.Distance(transform.position, m_Player.transform.position) < 1)
+            {
+                m_Behaviour.AttackPlayer();
+            }
         }
 
         public void Initialize()
@@ -34,7 +39,7 @@ namespace Guard
             if (m_CurrentState == GuardState.Chasing)
             {
                 m_Behaviour.animator.SetFloat(Speed, 1);
-                m_Agent.speed = 3f;
+                m_Agent.speed = 5f;
             }
         }
     }

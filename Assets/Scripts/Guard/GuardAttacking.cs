@@ -8,14 +8,24 @@ namespace Guard
         [SerializeField] private GameObject player;
 
         private PlayerHealth m_PlayerHealth;
+        private GuardBehaviour m_Behaviour;
+
         private GuardState m_CurrentState;
+
+        private float m_Timer;
+
+        private static readonly int Attack = Animator.StringToHash("Attack");
 
         private void Update()
         {
             if (m_CurrentState != GuardState.Attacking)
                 return;
 
-            if (Vector3.Distance(transform.position, player.transform.position) < 1)
+            m_Behaviour.animator.SetBool(Attack, true);
+
+            m_Timer += Time.deltaTime;
+
+            if (m_Timer > 1.25f)
             {
                 m_PlayerHealth.Kill();
             }
@@ -24,6 +34,7 @@ namespace Guard
         public void Initialize()
         {
             m_PlayerHealth = player.GetComponent<PlayerHealth>();
+            m_Behaviour = GetComponent<GuardBehaviour>();
         }
 
         public void UpdateState(GuardState newState)
