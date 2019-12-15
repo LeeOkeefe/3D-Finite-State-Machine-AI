@@ -28,6 +28,9 @@ namespace Player
 
         public void DamageHealth(int damage)
         {
+            if (IsDead)
+                return;
+
             CurrentHealth -= damage;
 
             if (CurrentHealth <= 0)
@@ -38,10 +41,15 @@ namespace Player
 
         public void Heal(int health)
         {
-            if (CurrentHealth >= MaxHealth)
+            if (IsDead)
                 return;
 
             CurrentHealth += health;
+
+            if (CurrentHealth >= MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
         }
     }
 }

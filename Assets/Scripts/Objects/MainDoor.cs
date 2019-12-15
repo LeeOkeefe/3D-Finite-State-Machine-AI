@@ -18,6 +18,8 @@ namespace Objects
             }
             else
             {
+                PlayerPrefs.SetInt("LevelComplete", 1);
+                PlayerPrefs.Save();
                 SceneManager.LoadScene("EndLevel");
             }
         }

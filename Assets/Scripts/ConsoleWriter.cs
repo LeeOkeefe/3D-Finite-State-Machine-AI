@@ -12,8 +12,8 @@ public class ConsoleWriter : MonoBehaviour
         ConsoleMessage($"Dear agent, " +
                        $"{Environment.NewLine}" +
                        $"{Environment.NewLine}" +
-                       $"Find the two bits of information and get out without being seen. " +
-                       $"It's worth searching the warden's office and mortuary." +
+                       $"Locate the two parts of information and leave without being detected. " +
+                       $"I'd suggest searching the warden's office, also the mortuary downstairs." +
                        $"{Environment.NewLine}" +
                        $"{Environment.NewLine}" +
                        $"P.S. You'll have to leave the same way you came in.");
