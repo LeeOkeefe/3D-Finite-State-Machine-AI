@@ -10,10 +10,10 @@ namespace Guard
 
         public void TriggerSound(float volumeScale, Vector3 position)
         {
-            Debug.Log($"I heard something at volume {volumeScale}!");
-
             if (m_CurrentState == GuardState.Chasing)
                 return;
+
+            Debug.Log($"I heard something at volume {volumeScale}!");
 
             m_Behaviour.HeardAudioSource(position);
         }

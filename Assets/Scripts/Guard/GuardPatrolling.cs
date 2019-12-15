@@ -9,6 +9,7 @@ namespace Guard
     [RequireComponent(typeof(GuardBehaviour))]
     public class GuardPatrolling : MonoBehaviour, IBehaviour
     {
+        private GuardBehaviour m_Behaviour;
         private NavMeshAgent m_Agent;
         private GuardState m_CurrentState;
 
@@ -16,6 +17,7 @@ namespace Guard
 
         [SerializeField] private Waypoint m_CurrentWaypoint;
         [SerializeField] private Waypoint m_PreviousWaypoint;
+        private static readonly int Speed = Animator.StringToHash("Speed");
 
         private void Update()
         {
@@ -29,6 +31,15 @@ namespace Guard
 
             if (m_Agent.hasPath && m_Agent.remainingDistance <= 0.5f)
             {
+                var random = new Random();
+                var roll = random.Next(0, 5);
+
+                if (roll == 0)
+                {
+                    m_Behaviour.SetIdle();
+                    return;
+                }
+
                 CalculateNextWaypoint();
             }
         }
@@ -79,6 +90,7 @@ namespace Guard
         public void Initialize()
         {
             m_Agent = GetComponent<NavMeshAgent>();
+            m_Behaviour = GetComponent<GuardBehaviour>();
         }
 
         public void UpdateState(GuardState newState)
@@ -87,6 +99,9 @@ namespace Guard
 
             if (newState == GuardState.Patrolling)
             {
+                m_Behaviour.animator.SetFloat(Speed, 0.1f);
+                m_Agent.speed = 1.75f;
+
                 if (m_CurrentWaypoint == null)
                 {
                     m_CurrentWaypoint = GetClosestWaypoint();

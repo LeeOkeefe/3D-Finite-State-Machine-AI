@@ -11,18 +11,13 @@ namespace Guard
         [SerializeField] private GuardState CurrentState;
         [SerializeField] private GuardState PreviousState;
 
-        private Animator m_Anim;
-        private static readonly int Speed = Animator.StringToHash("Speed");
-        private static readonly int Idle = Animator.StringToHash("Idle");
-        private static readonly int Conversing = Animator.StringToHash("Conversing");
-        private static readonly int Attack = Animator.StringToHash("Attack");
-        private static readonly int Investigate = Animator.StringToHash("Investigate");
+        public Animator animator;
 
         private void Awake()
         {
             CurrentState = GuardState.Patrolling;
             PreviousState = GuardState.Idle;
-            m_Anim = GetComponent<Animator>();
+            animator = GetComponent<Animator>();
             InitializeBehaviourStates();
             UpdateChildrenStates();
         }
@@ -37,30 +32,30 @@ namespace Guard
             }
         }
 
-        private void SetAnimation()
+        /*private void SetAnimation()
         {
             switch (CurrentState)
             {
                 case GuardState.Idle:
-                    m_Anim.SetTrigger(Idle);
+                    animator.SetTrigger(Idle);
                     break;
                 case GuardState.Patrolling:
-                    m_Anim.SetFloat(Speed, 0.5f);
+                    animator.SetFloat(Speed, 0.5f);
                     break;
                 case GuardState.Attacking:
-                    m_Anim.SetTrigger(Attack);
+                    animator.SetTrigger(Attack);
                     break;
                 case GuardState.Chasing:
-                    m_Anim.SetFloat(Speed, 1f);
+                    animator.SetFloat(Speed, 1f);
                     break;
                 case GuardState.Conversing:
-                    m_Anim.SetTrigger(Conversing);
+                    animator.SetTrigger(Conversing);
                     break;
                 case GuardState.Investigating:
-                    m_Anim.SetTrigger(Investigate);
+                    animator.SetTrigger(Investigate);
                     break;
             }
-        }
+        }*/
 
         public void LostPlayer()
         {
@@ -137,7 +132,7 @@ namespace Guard
             CurrentState = newState;
 
             UpdateChildrenStates();
-            SetAnimation();
+            Debug.Log(newState);
         }
 
         private void UpdateChildrenStates()
