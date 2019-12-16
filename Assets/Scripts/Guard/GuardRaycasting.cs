@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Objects;
+using UnityEngine;
 
 namespace Guard
 {
@@ -15,6 +18,11 @@ namespace Guard
         private GuardState m_GuardState;
 
         private void Update()
+        {
+            SearchForPlayer();
+        }
+
+        private void SearchForPlayer()
         {
             var targetDir = Player.transform.position - transform.position;
             var angle = Vector3.Angle(targetDir, transform.forward);

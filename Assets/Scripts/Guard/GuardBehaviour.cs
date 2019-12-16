@@ -11,13 +11,13 @@ namespace Guard
         [SerializeField] private GuardState CurrentState;
         [SerializeField] private GuardState PreviousState;
 
-        public Animator animator;
+        public Animator Animator;
 
         private void Awake()
         {
             CurrentState = GuardState.Patrolling;
             PreviousState = GuardState.Idle;
-            animator = GetComponent<Animator>();
+            Animator = GetComponent<Animator>();
             InitializeBehaviourStates();
             UpdateChildrenStates();
         }
@@ -89,6 +89,11 @@ namespace Guard
             {
                 TransitionState(GuardState.Chasing);
             }
+        }
+
+        public void SeenOpenDoor(Vector3 position)
+        {
+            SetInvestigation(position);
         }
 
         private void SetInvestigation(Vector3 position)

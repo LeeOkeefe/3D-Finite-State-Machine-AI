@@ -9,14 +9,14 @@ public class ConsoleWriter : MonoBehaviour
 
     private void Start()
     {
-        ConsoleMessage($"Dear agent, " +
+        ConsoleMessage("Dear agent, " +
                        $"{Environment.NewLine}" +
                        $"{Environment.NewLine}" +
-                       $"Locate the two parts of information and leave without being detected. " +
-                       $"I'd suggest searching the warden's office, also the mortuary downstairs." +
+                       "Locate the two parts of information and leave without being detected. " +
+                       "I'd suggest searching the warden's office, also the mortuary downstairs." +
                        $"{Environment.NewLine}" +
                        $"{Environment.NewLine}" +
-                       $"P.S. You'll have to leave the same way you came in.");
+                       "P.S. You'll have to leave the same way you came in.");
     }
 
     public void ConsoleMessage(string message)

@@ -19,11 +19,12 @@ public class BroadcastSound : MonoBehaviour
         BroadcastSoundPlayed();
     }
 
-    public void Broadcast()
+    public void Broadcast(float maxDistance)
     {
         if (m_MySource.isPlaying)
             return;
 
+        m_MySource.maxDistance = maxDistance;
         m_MySource.PlayOneShot(m_MySource.clip);
         BroadcastSoundPlayed();
     }

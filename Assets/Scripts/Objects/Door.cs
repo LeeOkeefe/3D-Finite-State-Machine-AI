@@ -11,6 +11,8 @@ namespace Objects
         private float m_OpenTime = 2;
         private float m_CurrentTime;
 
+        public bool m_Opened;
+
         private void Start()
         {
             m_Audio = GetComponent<AudioSource>();
@@ -19,6 +21,7 @@ namespace Objects
         public virtual void Interact()
         {
             StartCoroutine(OpenDoor());
+            m_Opened = true;
             m_Audio.PlayOneShot(m_Audio.clip);
         }
 
@@ -41,7 +44,7 @@ namespace Objects
             }
 
             m_CurrentTime = 0;
-            Destroy(this);
+            //Destroy(this);
         }
     }
 }

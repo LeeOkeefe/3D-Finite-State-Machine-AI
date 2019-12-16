@@ -30,13 +30,13 @@ namespace Guard
 
             if (m_Agent.remainingDistance < 0.5f)
             {
-                m_Behaviour.animator.SetBool(Investigate, true);
+                m_Behaviour.Animator.SetBool(Investigate, true);
                 m_Timer += Time.deltaTime;
 
                 if (m_Timer >= m_InvestigationTime)
                 {
-                    m_Behaviour.animator.SetFloat(Speed, 0.1f);
-                    m_Behaviour.animator.SetBool(Investigate, false);
+                    m_Behaviour.Animator.SetFloat(Speed, 0.1f);
+                    m_Behaviour.Animator.SetBool(Investigate, false);
                     m_Behaviour.EndInvestigation();
                 }
             }

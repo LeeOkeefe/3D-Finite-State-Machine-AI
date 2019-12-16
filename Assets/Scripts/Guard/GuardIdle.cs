@@ -29,8 +29,6 @@ namespace Guard
 
             if (m_Timer >= m_MaxTime)
             {
-                m_Agent.isStopped = false;
-                m_Behaviour.animator.SetBool(Idle, false);
                 m_Behaviour.EndIdle();
             }
         }
@@ -44,13 +42,19 @@ namespace Guard
 
         public void UpdateState(GuardState newState)
         {
+            if (m_CurrentState == GuardState.Idle && newState != GuardState.Idle)
+            {
+                m_Behaviour.Animator.SetBool(Idle, false);
+                m_Agent.isStopped = false;
+            }
+
             m_CurrentState = newState;
             m_Timer = 0;
 
             if (m_CurrentState == GuardState.Idle)
             {
                 m_MaxTime = m_Random.Next(2, 6);
-                m_Behaviour.animator.SetBool(Idle, true);
+                m_Behaviour.Animator.SetBool(Idle, true);
                 m_Agent.isStopped = true;
             }
         }

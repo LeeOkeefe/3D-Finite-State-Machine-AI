@@ -99,7 +99,7 @@ namespace Guard
 
             if (newState == GuardState.Patrolling)
             {
-                m_Behaviour.animator.SetFloat(Speed, 0.1f);
+                m_Behaviour.Animator.SetFloat(Speed, 0.1f);
                 m_Agent.speed = 1.75f;
 
                 if (m_CurrentWaypoint == null)

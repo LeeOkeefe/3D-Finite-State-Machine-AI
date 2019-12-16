@@ -27,7 +27,7 @@ namespace Player
         {
             if (m_Anim.GetFloat(Horizontal) != 0 || m_Anim.GetFloat(Vertical) != 0)
             {
-                footsteps.Broadcast();
+                footsteps.Broadcast(4);
             }
 
             var horizontalMovement = Input.GetAxisRaw("Horizontal");
