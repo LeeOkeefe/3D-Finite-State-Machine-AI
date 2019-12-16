@@ -5,6 +5,7 @@ using Random = System.Random;
 
 namespace Guard
 {
+    [RequireComponent(typeof(GuardBehaviour))]
     public class GuardIdle : MonoBehaviour, IBehaviour
     {
         private GuardBehaviour m_Behaviour;
@@ -44,7 +45,7 @@ namespace Guard
         {
             if (m_CurrentState == GuardState.Idle && newState != GuardState.Idle)
             {
-                m_Behaviour.Animator.SetBool(Idle, false);
+                m_Behaviour.animator.SetBool(Idle, false);
                 m_Agent.isStopped = false;
             }
 
@@ -54,7 +55,7 @@ namespace Guard
             if (m_CurrentState == GuardState.Idle)
             {
                 m_MaxTime = m_Random.Next(2, 6);
-                m_Behaviour.Animator.SetBool(Idle, true);
+                m_Behaviour.animator.SetBool(Idle, true);
                 m_Agent.isStopped = true;
             }
         }

@@ -38,7 +38,7 @@ namespace Guard
 
             if (m_CurrentState == GuardState.Chasing)
             {
-                m_Behaviour.Animator.SetFloat(Speed, 1);
+                m_Behaviour.animator.SetFloat(Speed, 1);
                 m_Agent.speed = 5f;
             }
         }

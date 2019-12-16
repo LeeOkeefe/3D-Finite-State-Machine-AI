@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Guard
 {
+    [RequireComponent(typeof(GuardBehaviour))]
     public class GuardAttacking : MonoBehaviour, IBehaviour
     {
         [SerializeField] private GameObject player;
@@ -21,7 +22,7 @@ namespace Guard
             if (m_CurrentState != GuardState.Attacking)
                 return;
 
-            m_Behaviour.Animator.SetBool(Attack, true);
+            m_Behaviour.animator.SetBool(Attack, true);
 
             m_Timer += Time.deltaTime;
 

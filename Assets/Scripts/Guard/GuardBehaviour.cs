@@ -5,19 +5,24 @@ namespace Guard
 {
     [RequireComponent(typeof(GuardRaycasting))]
     [RequireComponent(typeof(GuardPatrolling))]
+    [RequireComponent(typeof(GuardInvestigating))]
+    [RequireComponent(typeof(GuardAttacking))]
+    [RequireComponent(typeof(GuardChasing))]
+    [RequireComponent(typeof(GuardIdle))]
     public class GuardBehaviour : MonoBehaviour
     {
         [SerializeField] private GameObject m_Player;
         [SerializeField] private GuardState CurrentState;
         [SerializeField] private GuardState PreviousState;
 
-        public Animator Animator;
+        [HideInInspector]
+        public Animator animator;
 
         private void Awake()
         {
             CurrentState = GuardState.Patrolling;
             PreviousState = GuardState.Idle;
-            Animator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();
             InitializeBehaviourStates();
             UpdateChildrenStates();
         }
