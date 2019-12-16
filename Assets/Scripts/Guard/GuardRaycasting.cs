@@ -23,13 +23,13 @@ namespace Guard
             {
                 m_LostTimer += Time.deltaTime;
 
-                if (m_LostTimer >= 3f)
+                if (m_LostTimer >= 5f)
                 {
                     Behaviour.LostPlayer();
                 }
             }
 
-            if (angle > 80f)
+            if (angle > 100f)
             {
                 TransitionState(SightState.NotSeen);
                 return;
@@ -46,7 +46,8 @@ namespace Guard
             m_SeenTimer += Time.deltaTime;
             if (m_SightState == SightState.NotSeen)
             {
-                TransitionState(SightState.ShortSeen);
+                var distance = Vector3.Distance(transform.position, Player.transform.position);
+                TransitionState(distance <= 15f ? SightState.LongSeen : SightState.ShortSeen);
             }
             else if (m_SightState == SightState.ShortSeen)
             {

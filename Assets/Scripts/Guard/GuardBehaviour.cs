@@ -11,18 +11,13 @@ namespace Guard
         [SerializeField] private GuardState CurrentState;
         [SerializeField] private GuardState PreviousState;
 
-        private Animator m_Anim;
-        private static readonly int Speed = Animator.StringToHash("Speed");
-        private static readonly int Idle = Animator.StringToHash("Idle");
-        private static readonly int Conversing = Animator.StringToHash("Conversing");
-        private static readonly int Attack = Animator.StringToHash("Attack");
-        private static readonly int Investigate = Animator.StringToHash("Investigate");
+        public Animator animator;
 
         private void Awake()
         {
             CurrentState = GuardState.Patrolling;
             PreviousState = GuardState.Idle;
-            m_Anim = GetComponent<Animator>();
+            animator = GetComponent<Animator>();
             InitializeBehaviourStates();
             UpdateChildrenStates();
         }
@@ -34,31 +29,6 @@ namespace Guard
             foreach (var behaviour in behaviours)
             {
                 behaviour.Initialize();
-            }
-        }
-
-        private void SetAnimation()
-        {
-            switch (CurrentState)
-            {
-                case GuardState.Idle:
-                    m_Anim.SetTrigger(Idle);
-                    break;
-                case GuardState.Patrolling:
-                    m_Anim.SetFloat(Speed, 0.5f);
-                    break;
-                case GuardState.Attacking:
-                    m_Anim.SetTrigger(Attack);
-                    break;
-                case GuardState.Chasing:
-                    m_Anim.SetFloat(Speed, 1f);
-                    break;
-                case GuardState.Conversing:
-                    m_Anim.SetTrigger(Conversing);
-                    break;
-                case GuardState.Investigating:
-                    m_Anim.SetTrigger(Investigate);
-                    break;
             }
         }
 
@@ -79,6 +49,11 @@ namespace Guard
             }
         }
 
+        public void AttackPlayer()
+        {
+            TransitionState(GuardState.Attacking);
+        }
+
         public void SetIdle()
         {
             if (IsInState(GuardState.Patrolling))
@@ -94,7 +69,8 @@ namespace Guard
 
         public void HeardAudioSource(Vector3 position)
         {
-            if (!IsInState(GuardState.Chasing))
+            if (!IsInState(GuardState.Chasing,
+                           GuardState.Attacking))
             {
                 SetInvestigation(position);
             }
@@ -137,7 +113,7 @@ namespace Guard
             CurrentState = newState;
 
             UpdateChildrenStates();
-            SetAnimation();
+            Debug.Log(newState);
         }
 
         private void UpdateChildrenStates()

@@ -8,8 +8,10 @@ namespace Guard
     {
         [SerializeField] private GameObject m_Player;
 
+        private GuardBehaviour m_Behaviour;
         private NavMeshAgent m_Agent;
         private GuardState m_CurrentState;
+        private static readonly int Speed = Animator.StringToHash("Speed");
 
         private void Update()
         {
@@ -17,16 +19,28 @@ namespace Guard
                 return;
 
             m_Agent.SetDestination(m_Player.transform.position);
+
+            if (Vector3.Distance(transform.position, m_Player.transform.position) < 1)
+            {
+                m_Behaviour.AttackPlayer();
+            }
         }
 
         public void Initialize()
         {
             m_Agent = GetComponent<NavMeshAgent>();
+            m_Behaviour = GetComponent<GuardBehaviour>();
         }
 
         public void UpdateState(GuardState newState)
         {
             m_CurrentState = newState;
+
+            if (m_CurrentState == GuardState.Chasing)
+            {
+                m_Behaviour.animator.SetFloat(Speed, 1);
+                m_Agent.speed = 5f;
+            }
         }
     }
 }
