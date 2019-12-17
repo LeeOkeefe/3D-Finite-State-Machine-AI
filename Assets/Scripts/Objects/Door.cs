@@ -20,9 +20,12 @@ namespace Objects
 
         public virtual void Interact()
         {
+            if (m_Opened)
+                return;
+
             StartCoroutine(OpenDoor());
-            m_Opened = true;
             m_Audio.PlayOneShot(m_Audio.clip);
+            m_Opened = true;
         }
 
         /// <summary>
@@ -30,7 +33,7 @@ namespace Objects
         /// </summary>
         protected IEnumerator OpenDoor()
         {
-            if (m_CurrentTime > 0)
+            if (m_CurrentTime > 0 || m_Opened)
                 yield break;
 
             var endRotation = transform.rotation * Quaternion.Euler(angle);
@@ -42,9 +45,6 @@ namespace Objects
                 transform.rotation = Quaternion.Slerp(transform.rotation, endRotation, percent);
                 yield return null;
             }
-
-            m_CurrentTime = 0;
-            //Destroy(this);
         }
     }
 }

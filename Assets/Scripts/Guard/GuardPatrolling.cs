@@ -51,7 +51,7 @@ namespace Guard
         {
             var nextWaypoints = m_CurrentWaypoint.LinkedWaypoints.ToList();
 
-            if (m_PreviousWaypoint != null)
+            if (m_PreviousWaypoint != null && nextWaypoints.Count > 1)
             {
                 nextWaypoints.Remove(m_PreviousWaypoint);
             }

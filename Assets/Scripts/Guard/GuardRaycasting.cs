@@ -37,7 +37,7 @@ namespace Guard
                 }
             }
 
-            if (angle > 100f)
+            if (angle > 80f)
             {
                 TransitionState(SightState.NotSeen);
                 return;
@@ -55,7 +55,7 @@ namespace Guard
             if (m_SightState == SightState.NotSeen)
             {
                 var distance = Vector3.Distance(transform.position, Player.transform.position);
-                TransitionState(distance <= 15f ? SightState.LongSeen : SightState.ShortSeen);
+                TransitionState(distance <= 12.5f ? SightState.LongSeen : SightState.ShortSeen);
             }
             else if (m_SightState == SightState.ShortSeen)
             {

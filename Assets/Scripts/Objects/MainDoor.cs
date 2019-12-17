@@ -14,7 +14,7 @@ namespace Objects
         {
             if (!itemIdRequired.All(i => inventory.HasItem(i)))
             {
-                StartCoroutine(GameManager.Instance.ShowMessage("Get the documents before leaving!"));
+                StartCoroutine(GameManager.Instance.ShowMessage("Find the documents before leaving!"));
             }
             else
             {
