@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-internal sealed class RadarRotate : MonoBehaviour 
+namespace UI
 {
-
-    private void Update() 
+    internal sealed class RadarRotate : MonoBehaviour 
     {
-        transform.eulerAngles += new Vector3(0, 0, -180f * Time.deltaTime * 0.75f);
+        // https://blog.theknightsofunity.com/implementing-minimap-unity/
+        //
+        private void Update() 
+        {
+            transform.eulerAngles += new Vector3(0, 0, -180f * Time.deltaTime * 0.75f);
+        }
     }
-
 }
